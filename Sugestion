@@ -1,5 +1,5 @@
 --[[
-  Creator: Magnus999
+  Creator: Kaelix
   Modificado para: Sistema de Sugestões via Webhook
 ]]
 local HttpService = game:GetService("HttpService")
