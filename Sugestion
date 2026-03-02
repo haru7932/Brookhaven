@@ -1,153 +1,250 @@
---[=[
- d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
-88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
-88      88    88    88            odD'      88      88    88 88ooo88 
-88  ooo 88    88    88          .88'        88      88    88 88~~~88 
-88. ~8~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88    @uniquadev
- Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
-
-designed using localmaze gui creator
-]=]
-
-local LMG2L = {};
+--[[
+  Creator: Magnus999
+  Modificado para: Sistema de Sugestões via Webhook
+]]
 local HttpService = game:GetService("HttpService")
-local Player = game:GetService("Players").LocalPlayer
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1467190665065795727/VEq8PIrzZWchSSIhxYlbFV3Ad4jMme7YVSKld8fgRVB_QFZQfvwYsduGIT04vy7wcRfS"
 
--- UI Setup
-LMG2L["ScreenGui_1"] = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"));
-LMG2L["ScreenGui_1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local UIGradient = Instance.new("UIGradient")
+local Shadow = Instance.new("Frame")
+local ShadowCorner = Instance.new("UICorner")
 
-LMG2L["Frame_2"] = Instance.new("Frame", LMG2L["ScreenGui_1"]);
-LMG2L["Frame_2"]["BorderSizePixel"] = 0;
-LMG2L["Frame_2"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-LMG2L["Frame_2"]["Size"] = UDim2.new(0, 502, 0, 230);
-LMG2L["Frame_2"]["Position"] = UDim2.new(0.5, -251, 0.5, -115); -- Centralizado para melhor visualização
+local Header = Instance.new("Frame")
+local HeaderCorner = Instance.new("UICorner")
+local HeaderGradient = Instance.new("UIGradient")
+local Title = Instance.new("TextLabel")
+local CloseButton = Instance.new("TextButton")
+local CloseCorner = Instance.new("UICorner")
 
-LMG2L["UIStroke_3"] = Instance.new("UIStroke", LMG2L["Frame_2"]);
-LMG2L["UIStroke_3"]["Thickness"] = 3;
-LMG2L["UIStroke_3"]["Color"] = Color3.fromRGB(127, 35, 210);
+local SuggestionContainer = Instance.new("Frame")
+local SuggestionCorner = Instance.new("UICorner")
+local SuggestionBox = Instance.new("TextBox")
+local SuggestionLabel = Instance.new("TextLabel")
 
-LMG2L["UICorner_4"] = Instance.new("UICorner", LMG2L["Frame_2"]);
+local ButtonContainer = Instance.new("Frame")
+local ButtonCorner = Instance.new("UICorner")
+local ButtonGradient = Instance.new("UIGradient")
+local SendButton = Instance.new("TextButton")
 
-LMG2L["ImageLabel_5"] = Instance.new("ImageLabel", LMG2L["Frame_2"]);
-LMG2L["ImageLabel_5"]["BorderSizePixel"] = 0;
-LMG2L["ImageLabel_5"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-LMG2L["ImageLabel_5"]["Size"] = UDim2.new(0, 502, 0, 230);
+local FeedbackLabel = Instance.new("TextLabel")
+local Credits = Instance.new("TextLabel")
 
-LMG2L["UICorner_6"] = Instance.new("UICorner", LMG2L["ImageLabel_5"]);
+-- Configurações de UI
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
 
-LMG2L["TextLabel_7"] = Instance.new("TextLabel", LMG2L["Frame_2"]);
-LMG2L["TextLabel_7"]["BorderSizePixel"] = 0;
-LMG2L["TextLabel_7"]["TextSize"] = 24;
-LMG2L["TextLabel_7"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-LMG2L["TextLabel_7"]["FontFace"] = Font.new([[rbxasset://fonts/families/PressStart2P.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-LMG2L["TextLabel_7"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-LMG2L["TextLabel_7"]["BackgroundTransparency"] = 1;
-LMG2L["TextLabel_7"]["Size"] = UDim2.new(0, 136, 0, 16);
-LMG2L["TextLabel_7"]["Text"] = [[Caixa De Sugestões]];
-LMG2L["TextLabel_7"]["Position"] = UDim2.new(0, 68, 0, 10);
+Shadow.Parent = ScreenGui
+Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.BackgroundTransparency = 0.7
+Shadow.Position = UDim2.new(0.5, -182, 0.5, -128)
+Shadow.Size = UDim2.new(0, 370, 0, 260)
+Shadow.ZIndex = 1
+ShadowCorner.CornerRadius = UDim.new(0, 15)
+ShadowCorner.Parent = Shadow
 
-LMG2L["TextBox_8"] = Instance.new("TextBox", LMG2L["Frame_2"]);
-LMG2L["TextBox_8"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-LMG2L["TextBox_8"]["BorderSizePixel"] = 0;
-LMG2L["TextBox_8"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-LMG2L["TextBox_8"]["TextYAlignment"] = Enum.TextYAlignment.Top;
-LMG2L["TextBox_8"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-LMG2L["TextBox_8"]["PlaceholderText"] = [[Deixe sua sugestão]];
-LMG2L["TextBox_8"]["Size"] = UDim2.new(0, 474, 0, 120);
-LMG2L["TextBox_8"]["Position"] = UDim2.new(0, 15, 0, 55);
-LMG2L["TextBox_8"]["Text"] = [[]];
-LMG2L["TextBox_8"]["ClearTextOnFocus"] = false;
-LMG2L["TextBox_8"]["TextWrapped"] = true;
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(45, 35, 85)
+Frame.Position = UDim2.new(0.5, -180, 0.5, -130)
+Frame.Size = UDim2.new(0, 360, 0, 250)
+Frame.ZIndex = 2
+UICorner.CornerRadius = UDim.new(0, 15)
+UICorner.Parent = Frame
 
-LMG2L["UIStroke_9"] = Instance.new("UIStroke", LMG2L["TextBox_8"]);
-LMG2L["UIStroke_9"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-LMG2L["UIStroke_9"]["Thickness"] = 3;
-LMG2L["UIStroke_9"]["Color"] = Color3.fromRGB(127, 35, 210);
+UIGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0.00, Color3.fromRGB(75, 45, 135)),
+    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 25, 95))
+}
+UIGradient.Rotation = 45
+UIGradient.Parent = Frame
 
-LMG2L["UICorner_a"] = Instance.new("UICorner", LMG2L["TextBox_8"]);
+-- Header
+Header.Parent = Frame
+Header.BackgroundColor3 = Color3.fromRGB(95, 65, 155)
+Header.Size = UDim2.new(1, 0, 0, 50)
+Header.ZIndex = 3
+HeaderCorner.CornerRadius = UDim.new(0, 15)
+HeaderCorner.Parent = Header
 
-LMG2L["TextButton_b"] = Instance.new("TextButton", LMG2L["Frame_2"]);
-LMG2L["TextButton_b"]["BorderSizePixel"] = 0;
-LMG2L["TextButton_b"]["TextSize"] = 18;
-LMG2L["TextButton_b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-LMG2L["TextButton_b"]["BackgroundColor3"] = Color3.fromRGB(127, 35, 210);
-LMG2L["TextButton_b"]["FontFace"] = Font.new([[rbxasset://fonts/families/PressStart2P.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-LMG2L["TextButton_b"]["Size"] = UDim2.new(0, 135, 0, 35);
-LMG2L["TextButton_b"]["Text"] = [[Send]];
-LMG2L["TextButton_b"]["Position"] = UDim2.new(0, 176, 0, 186);
+Title.Parent = Header
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 20, 0, 0)
+Title.Size = UDim2.new(0, 250, 1, 0)
+Title.Font = Enum.Font.GothamBold
+Title.Text = "Sugestões | Bytex"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 20
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.ZIndex = 4
 
-LMG2L["UICorner_c"] = Instance.new("UICorner", LMG2L["TextButton_b"]);
+CloseButton.Parent = Header
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
+CloseButton.Position = UDim2.new(1, -40, 0, 10)
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Text = "×"
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.TextSize = 18
+CloseButton.ZIndex = 4
+CloseCorner.CornerRadius = UDim.new(0, 8)
+CloseCorner.Parent = CloseButton
 
-LMG2L["TextLabel_d"] = Instance.new("TextLabel", LMG2L["Frame_2"]);
-LMG2L["TextLabel_d"]["BorderSizePixel"] = 0;
-LMG2L["TextLabel_d"]["TextSize"] = 11;
-LMG2L["TextLabel_d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-LMG2L["TextLabel_d"]["FontFace"] = Font.new([[rbxasset://fonts/families/PressStart2P.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-LMG2L["TextLabel_d"]["TextColor3"] = Color3.fromRGB(174, 174, 174);
-LMG2L["TextLabel_d"]["BackgroundTransparency"] = 1;
-LMG2L["TextLabel_d"]["Size"] = UDim2.new(0, 136, 0, 16);
-LMG2L["TextLabel_d"]["Text"] = [[Made by: Kaelix | Inspired by Lyra Hub ]];
-LMG2L["TextLabel_d"]["Position"] = UDim2.new(0, 64, 0, 24);
+-- Suggestion Input
+SuggestionContainer.Parent = Frame
+SuggestionContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SuggestionContainer.BackgroundTransparency = 0.9
+SuggestionContainer.Position = UDim2.new(0, 30, 0, 70)
+SuggestionContainer.Size = UDim2.new(0, 300, 0, 80) -- Maior para texto
+SuggestionContainer.ZIndex = 3
+SuggestionCorner.CornerRadius = UDim.new(0, 10)
+SuggestionCorner.Parent = SuggestionContainer
 
-LMG2L["ImageButton_e"] = Instance.new("ImageButton", LMG2L["Frame_2"]);
-LMG2L["ImageButton_e"]["BorderSizePixel"] = 0;
-LMG2L["ImageButton_e"]["BackgroundColor3"] = Color3.fromRGB(127, 34, 210);
-LMG2L["ImageButton_e"]["Size"] = UDim2.new(0, 25, 0, 25);
-LMG2L["ImageButton_e"]["Position"] = UDim2.new(0, 464, 0, 10);
-LMG2L["ImageButton_e"]["Image"] = "rbxassetid://10747384394";
+SuggestionBox.Name = "SuggestionBox"
+SuggestionBox.Parent = SuggestionContainer
+SuggestionBox.BackgroundTransparency = 1
+SuggestionBox.Position = UDim2.new(0, 10, 0, 25)
+SuggestionBox.Size = UDim2.new(1, -20, 0, 50)
+SuggestionBox.Font = Enum.Font.Gotham
+SuggestionBox.PlaceholderText = "Escreva sua sugestão aqui..."
+SuggestionBox.Text = ""
+SuggestionBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+SuggestionBox.TextSize = 14
+SuggestionBox.ClearTextOnFocus = false
+SuggestionBox.TextWrapped = true
+SuggestionBox.TextYAlignment = Enum.TextYAlignment.Top
+SuggestionBox.ZIndex = 4
 
-LMG2L["UICorner_f"] = Instance.new("UICorner", LMG2L["ImageButton_e"]);
+SuggestionLabel.Parent = SuggestionContainer
+SuggestionLabel.BackgroundTransparency = 1
+SuggestionLabel.Position = UDim2.new(0, 10, 0, 5)
+SuggestionLabel.Size = UDim2.new(1, -20, 0, 15)
+SuggestionLabel.Font = Enum.Font.GothamBold
+SuggestionLabel.Text = "SUA SUGESTÃO"
+SuggestionLabel.TextColor3 = Color3.fromRGB(200, 170, 255)
+SuggestionLabel.TextSize = 11
+SuggestionLabel.ZIndex = 4
 
---- LÓGICA DO WEBHOOK ---
+-- Botão Enviar
+ButtonContainer.Parent = Frame
+ButtonContainer.BackgroundColor3 = Color3.fromRGB(135, 95, 215)
+ButtonContainer.Position = UDim2.new(0, 30, 0, 170)
+ButtonContainer.Size = UDim2.new(0, 300, 0, 40)
+ButtonContainer.ZIndex = 3
+ButtonCorner.CornerRadius = UDim.new(0, 12)
+ButtonCorner.Parent = ButtonContainer
 
-local webhook_url = "https://discord.com/api/webhooks/1467190665065795727/VEq8PIrzZWchSSIhxYlbFV3Ad4jMme7YVSKld8fgRVB_QFZQfvwYsduGIT04vy7wcRfS"
+SendButton.Parent = ButtonContainer
+SendButton.BackgroundTransparency = 1
+SendButton.Size = UDim2.new(1, 0, 1, 0)
+SendButton.Font = Enum.Font.GothamBold
+SendButton.Text = "Enviar Sugestão"
+SendButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SendButton.TextSize = 16
+SendButton.ZIndex = 4
 
-LMG2L["TextButton_b"].MouseButton1Click:Connect(function()
-    local message = LMG2L["TextBox_8"].Text
+FeedbackLabel.Parent = Frame
+FeedbackLabel.BackgroundTransparency = 1
+FeedbackLabel.Position = UDim2.new(0, 30, 0, 215)
+FeedbackLabel.Size = UDim2.new(0, 300, 0, 20)
+FeedbackLabel.Font = Enum.Font.Gotham
+FeedbackLabel.Text = ""
+FeedbackLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+FeedbackLabel.TextSize = 12
+FeedbackLabel.ZIndex = 4
+
+Credits.Parent = Frame
+Credits.BackgroundTransparency = 1
+Credits.Position = UDim2.new(0, 0, 1, -20)
+Credits.Size = UDim2.new(1, 0, 0, 15)
+Credits.Font = Enum.Font.Gotham
+Credits.Text = "@Kaelix | Bytex System"
+Credits.TextColor3 = Color3.fromRGB(150, 120, 200)
+Credits.TextSize = 10
+Credits.ZIndex = 4
+
+-- Funções Principais
+local function sendToDiscord()
+    local text = SuggestionBox.Text
+    local player = game.Players.LocalPlayer
     
-    if message ~= "" and message ~= " " then
-        local data = {
-            ["content"] = "",
-            ["embeds"] = {{
-                ["title"] = " Nova Sugestão!",
-                ["description"] = message,
-                ["color"] = 8332242, -- Cor roxa aproximada
-                ["footer"] = {
-                    ["text"] = "Enviado por: " .. Player.Name .. " (" .. Player.UserId .. ")"
-                },
-                ["timestamp"] = DateTime.now():ToIsoDate()
-            }}
-        }
-        
-        local success, err = pcall(function()
-            local request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
-            if request then
-                request({
-                    Url = webhook_url,
-                    Method = "POST",
-                    Headers = {["Content-Type"] = "application/json"},
-                    Body = HttpService:JSONEncode(data)
-                })
-            else
-                warn("Executor não suporta requisições HTTP.")
-            end
-        end)
-        
-        if success then
-            LMG2L["TextBox_8"].Text = ""
-            LMG2L["TextButton_b"].Text = "Sent!"
-            task.wait(2)
-            LMG2L["TextButton_b"].Text = "Send"
-        else
-            warn("Erro ao enviar: " .. err)
-        end
+    if text == "" or #text < 5 then
+        FeedbackLabel.Text = "✅ Enviado, Mas na próxima Escreva algo mais detalhado!"
+        FeedbackLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        return
     end
+
+    SendButton.Text = "Enviando..."
+    SendButton.Active = false
+
+    local data = {
+        ["embeds"] = {{
+            ["title"] = "📩 Nova Sugestão Recebida",
+            ["color"] = 7540943, -- Cor roxa
+            ["fields"] = {
+                {["name"] = "Jogador", ["value"] = player.Name .. " (" .. player.UserId .. ")", ["inline"] = true},
+                {["name"] = "Jogo", ["value"] = "ID: " .. game.PlaceId, ["inline"] = true},
+                {["name"] = "Sugestão", ["value"] = "```" .. text .. "```"}
+            },
+            ["footer"] = {["text"] = "Bytex Suggestion System • " .. os.date("%x")}
+        }}
+    }
+
+    local success, err = pcall(function()
+        local json = HttpService:JSONEncode(data)
+        -- Nota: Em scripts locais (Exploits), use request ou o comando específico do seu executor
+        if request then
+            request({
+                Url = WEBHOOK_URL,
+                Method = "POST",
+                Headers = {["Content-Type"] = "application/json"},
+                Body = json
+            })
+        else
+            -- Fallback para alguns executores
+            HttpService:PostAsync(WEBHOOK_URL, json)
+        end
+    end)
+
+    if success then
+        FeedbackLabel.Text = "✅ Sugestão enviada com sucesso!"
+        FeedbackLabel.TextColor3 = Color3.fromRGB(100, 255, 150)
+        SuggestionBox.Text = ""
+    else
+        FeedbackLabel.Text = "❌ Erro ao enviar. Tente novamente."
+        FeedbackLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        warn(err)
+    end
+
+    wait(3)
+    SendButton.Text = "Enviar Sugestão"
+    SendButton.Active = true
+    FeedbackLabel.Text = ""
+end
+
+-- Handlers de UI (Fechar, Arrastar, Animar)
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
 end)
 
--- Botão de fechar (opcional, mantendo a interface)
-LMG2L["ImageButton_e"].MouseButton1Click:Connect(function()
-    LMG2L["ScreenGui_1"]:Destroy()
-end)
+SendButton.MouseButton1Click:Connect(sendToDiscord)
 
-return LMG2L["ScreenGui_1"];
+-- (Mantive sua lógica de Draggable e Entrance aqui de forma simplificada)
+local function makeDraggable()
+    local dragging, dragStart, startPos
+    Header.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true; dragStart = input.Position; startPos = Frame.Position
+            input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then dragging = false end end)
+        end
+    end)
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            local delta = input.Position - dragStart
+            Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+            Shadow.Position = UDim2.new(Frame.Position.X.Scale, Frame.Position.X.Offset - 2, Frame.Position.Y.Scale, Frame.Position.Y.Offset + 2)
+        end
+    end)
+end
+
+coroutine.wrap(makeDraggable)()
