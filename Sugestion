@@ -1,0 +1,153 @@
+--[=[
+ d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
+88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
+88      88    88    88            odD'      88      88    88 88ooo88 
+88  ooo 88    88    88          .88'        88      88    88 88~~~88 
+88. ~8~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88    @uniquadev
+ Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
+
+designed using localmaze gui creator
+]=]
+
+local LMG2L = {};
+local HttpService = game:GetService("HttpService")
+local Player = game:GetService("Players").LocalPlayer
+
+-- UI Setup
+LMG2L["ScreenGui_1"] = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"));
+LMG2L["ScreenGui_1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+
+LMG2L["Frame_2"] = Instance.new("Frame", LMG2L["ScreenGui_1"]);
+LMG2L["Frame_2"]["BorderSizePixel"] = 0;
+LMG2L["Frame_2"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+LMG2L["Frame_2"]["Size"] = UDim2.new(0, 502, 0, 230);
+LMG2L["Frame_2"]["Position"] = UDim2.new(0.5, -251, 0.5, -115); -- Centralizado para melhor visualização
+
+LMG2L["UIStroke_3"] = Instance.new("UIStroke", LMG2L["Frame_2"]);
+LMG2L["UIStroke_3"]["Thickness"] = 3;
+LMG2L["UIStroke_3"]["Color"] = Color3.fromRGB(127, 35, 210);
+
+LMG2L["UICorner_4"] = Instance.new("UICorner", LMG2L["Frame_2"]);
+
+LMG2L["ImageLabel_5"] = Instance.new("ImageLabel", LMG2L["Frame_2"]);
+LMG2L["ImageLabel_5"]["BorderSizePixel"] = 0;
+LMG2L["ImageLabel_5"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+LMG2L["ImageLabel_5"]["Size"] = UDim2.new(0, 502, 0, 230);
+
+LMG2L["UICorner_6"] = Instance.new("UICorner", LMG2L["ImageLabel_5"]);
+
+LMG2L["TextLabel_7"] = Instance.new("TextLabel", LMG2L["Frame_2"]);
+LMG2L["TextLabel_7"]["BorderSizePixel"] = 0;
+LMG2L["TextLabel_7"]["TextSize"] = 24;
+LMG2L["TextLabel_7"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["TextLabel_7"]["FontFace"] = Font.new([[rbxasset://fonts/families/PressStart2P.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+LMG2L["TextLabel_7"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["TextLabel_7"]["BackgroundTransparency"] = 1;
+LMG2L["TextLabel_7"]["Size"] = UDim2.new(0, 136, 0, 16);
+LMG2L["TextLabel_7"]["Text"] = [[Caixa De Sugestões]];
+LMG2L["TextLabel_7"]["Position"] = UDim2.new(0, 68, 0, 10);
+
+LMG2L["TextBox_8"] = Instance.new("TextBox", LMG2L["Frame_2"]);
+LMG2L["TextBox_8"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+LMG2L["TextBox_8"]["BorderSizePixel"] = 0;
+LMG2L["TextBox_8"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["TextBox_8"]["TextYAlignment"] = Enum.TextYAlignment.Top;
+LMG2L["TextBox_8"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+LMG2L["TextBox_8"]["PlaceholderText"] = [[Deixe sua sugestão]];
+LMG2L["TextBox_8"]["Size"] = UDim2.new(0, 474, 0, 120);
+LMG2L["TextBox_8"]["Position"] = UDim2.new(0, 15, 0, 55);
+LMG2L["TextBox_8"]["Text"] = [[]];
+LMG2L["TextBox_8"]["ClearTextOnFocus"] = false;
+LMG2L["TextBox_8"]["TextWrapped"] = true;
+
+LMG2L["UIStroke_9"] = Instance.new("UIStroke", LMG2L["TextBox_8"]);
+LMG2L["UIStroke_9"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+LMG2L["UIStroke_9"]["Thickness"] = 3;
+LMG2L["UIStroke_9"]["Color"] = Color3.fromRGB(127, 35, 210);
+
+LMG2L["UICorner_a"] = Instance.new("UICorner", LMG2L["TextBox_8"]);
+
+LMG2L["TextButton_b"] = Instance.new("TextButton", LMG2L["Frame_2"]);
+LMG2L["TextButton_b"]["BorderSizePixel"] = 0;
+LMG2L["TextButton_b"]["TextSize"] = 18;
+LMG2L["TextButton_b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["TextButton_b"]["BackgroundColor3"] = Color3.fromRGB(127, 35, 210);
+LMG2L["TextButton_b"]["FontFace"] = Font.new([[rbxasset://fonts/families/PressStart2P.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+LMG2L["TextButton_b"]["Size"] = UDim2.new(0, 135, 0, 35);
+LMG2L["TextButton_b"]["Text"] = [[Send]];
+LMG2L["TextButton_b"]["Position"] = UDim2.new(0, 176, 0, 186);
+
+LMG2L["UICorner_c"] = Instance.new("UICorner", LMG2L["TextButton_b"]);
+
+LMG2L["TextLabel_d"] = Instance.new("TextLabel", LMG2L["Frame_2"]);
+LMG2L["TextLabel_d"]["BorderSizePixel"] = 0;
+LMG2L["TextLabel_d"]["TextSize"] = 11;
+LMG2L["TextLabel_d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["TextLabel_d"]["FontFace"] = Font.new([[rbxasset://fonts/families/PressStart2P.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+LMG2L["TextLabel_d"]["TextColor3"] = Color3.fromRGB(174, 174, 174);
+LMG2L["TextLabel_d"]["BackgroundTransparency"] = 1;
+LMG2L["TextLabel_d"]["Size"] = UDim2.new(0, 136, 0, 16);
+LMG2L["TextLabel_d"]["Text"] = [[Made by: Kaelix | Inspired by Lyra Hub ]];
+LMG2L["TextLabel_d"]["Position"] = UDim2.new(0, 64, 0, 24);
+
+LMG2L["ImageButton_e"] = Instance.new("ImageButton", LMG2L["Frame_2"]);
+LMG2L["ImageButton_e"]["BorderSizePixel"] = 0;
+LMG2L["ImageButton_e"]["BackgroundColor3"] = Color3.fromRGB(127, 34, 210);
+LMG2L["ImageButton_e"]["Size"] = UDim2.new(0, 25, 0, 25);
+LMG2L["ImageButton_e"]["Position"] = UDim2.new(0, 464, 0, 10);
+LMG2L["ImageButton_e"]["Image"] = "rbxassetid://10747384394";
+
+LMG2L["UICorner_f"] = Instance.new("UICorner", LMG2L["ImageButton_e"]);
+
+--- LÓGICA DO WEBHOOK ---
+
+local webhook_url = "https://discord.com/api/webhooks/1467190665065795727/VEq8PIrzZWchSSIhxYlbFV3Ad4jMme7YVSKld8fgRVB_QFZQfvwYsduGIT04vy7wcRfS"
+
+LMG2L["TextButton_b"].MouseButton1Click:Connect(function()
+    local message = LMG2L["TextBox_8"].Text
+    
+    if message ~= "" and message ~= " " then
+        local data = {
+            ["content"] = "",
+            ["embeds"] = {{
+                ["title"] = " Nova Sugestão!",
+                ["description"] = message,
+                ["color"] = 8332242, -- Cor roxa aproximada
+                ["footer"] = {
+                    ["text"] = "Enviado por: " .. Player.Name .. " (" .. Player.UserId .. ")"
+                },
+                ["timestamp"] = DateTime.now():ToIsoDate()
+            }}
+        }
+        
+        local success, err = pcall(function()
+            local request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+            if request then
+                request({
+                    Url = webhook_url,
+                    Method = "POST",
+                    Headers = {["Content-Type"] = "application/json"},
+                    Body = HttpService:JSONEncode(data)
+                })
+            else
+                warn("Executor não suporta requisições HTTP.")
+            end
+        end)
+        
+        if success then
+            LMG2L["TextBox_8"].Text = ""
+            LMG2L["TextButton_b"].Text = "Sent!"
+            task.wait(2)
+            LMG2L["TextButton_b"].Text = "Send"
+        else
+            warn("Erro ao enviar: " .. err)
+        end
+    end
+end)
+
+-- Botão de fechar (opcional, mantendo a interface)
+LMG2L["ImageButton_e"].MouseButton1Click:Connect(function()
+    LMG2L["ScreenGui_1"]:Destroy()
+end)
+
+return LMG2L["ScreenGui_1"];
