@@ -1,3 +1,4 @@
+
 local MarketplaceService = game:GetService("MarketplaceService")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
@@ -776,24 +777,16 @@ function redzlib:MakeWindow(Configs)
 		Name = "Top Bar"
 	})
 
-	local Logo = Create("ImageLabel", TopBar, {
-		Size = UDim2.new(0, 22, 0, 22),
-		Position = UDim2.new(0, 15, 0.5),
-		AnchorPoint = Vector2.new(1, 0.5),
-		Image = "rbxassetid://15637081879",
-		BackgroundTransparency = 1
-	})	
-
 	local Title = InsertTheme(Create("TextLabel", TopBar, {
 		Position = UDim2.new(0, 15, 0.5),
 		AnchorPoint = Vector2.new(0, 0.5),
 		AutomaticSize = "XY",
 		Text = "             " .. WTitle,
 		TextXAlignment = "Left",
-		TextSize = 14,
+		TextSize = 12,
 		TextColor3 = Theme["Color Text"],
 		BackgroundTransparency = 1,
-		Font = Enum.Font.SemiBold,
+		Font = Enum.Font.SourceSansBold,
 		Name = "Title"
 	}, {
 		InsertTheme(Create("TextLabel", {
@@ -807,7 +800,7 @@ function redzlib:MakeWindow(Configs)
 			TextXAlignment = "Left",
 			TextYAlignment = "Bottom",
 			TextSize = 8,
-			Font = Enum.Font.Gotham,
+			Font = Enum.Font.FredokaOne,
 			Name = "SubTitle"
 		}), "DarkText")
 	}), "Text")
