@@ -1911,7 +1911,7 @@ function redzlib:MakeWindow(Configs)
 				Text = SectionName,
 				TextColor3 = Theme["Color Text"],
 				Size = UDim2.new(1, -25, 1, 0),
-				Position = UDim2.new(0, 5),
+				Position = UDim2.new(0, 9),
 				BackgroundTransparency = 1,
 				TextTruncate = "AtEnd",
 				TextSize = 14,
